@@ -1,11 +1,9 @@
 #include <iostream>
-#include<string>
+#include <string>
 
 using namespace std;
 
-//parent class
-
-class Model {
+class imperium {
 protected:
 	int year;
 	string name;
@@ -13,7 +11,7 @@ protected:
 	int wounds;
 
 public:
-	Model(int year, string name, int movement, int wounds)
+	imperium(int year, string name, int movement, int wounds)
 		:year(year), name(name), movement(movement), wounds(wounds) {
 	}
 
@@ -25,17 +23,13 @@ public:
 	}
 };
 
-//inherited class
-
-class Imperium : public Model {
+class spacemarine : public imperium {
 private:
-	string faction;
+	string chapter;
 
 public:
-	Imperium(int year, string name, int movement, int wounds, string faction)
-		:Model(year, name, movement, wounds),
-		faction(faction) {
-
+	spacemarine(int year, string name, int movement, int wounds, string chapter)
+		:imperium(year, name, movement, wounds), chapter(chapter) {
 	}
 
 	void display() override {
@@ -43,20 +37,19 @@ public:
 		cout << "name " << name << endl;
 		cout << "movement " << movement << endl;
 		cout << "wounds " << wounds << endl;
-		cout << "Faction: " << faction << endl;
+		cout << "chapter " << chapter << endl;
 	}
 };
 
 int main() {
-	Model myModel(2025, "Generic Model", 6, 3);
+	imperium testImperium(2025, "test", 6, 3);
 
-	Imperium myImperium(2025, "", 6, 1, "Adepta Soriritas");
+	spacemarine testMarine(2025, "Dreadnought", 8, 9, "Ultramarines");
 
+	cout << "TESTMODEL" << endl;
+	testImperium.display();
 
-	cout << "MODEL" << endl;
-	myModel.display();
-
-	cout << endl << "IMPERIUM MODEL" << endl;
-	myImperium.display();
+	cout << "TESTMARINE" << endl;
+	testMarine.display();
 
 };
