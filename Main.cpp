@@ -1,45 +1,62 @@
 #include <iostream>
-#include <string>
+#include<string>
+
 using namespace std;
 
-//spacemarine class
+//parent class
 
-class spacemarine {
-public:
-	string role;
-	string rank;
-	int age;
-	spacemarine(string x, string y, int z) {
-		role = x;
-		rank = y;
-		age = z;
-	}
-};
-
-//sister class
-
-class SoB {
-public:
-	string rank;
+class Model {
+protected:
+	int year;
 	string name;
+	int movement;
 	int wounds;
-	SoB(string x, string y, int z) {
-		rank = x;
-		name = y;
-		wounds = z;
+
+public:
+	Model(int year, string name, int movement, int wounds)
+		:year(year), name(name), movement(movement), wounds(wounds) {
+	}
+
+	virtual void display() {
+		cout << "year " << year << endl;
+		cout << "name " << name << endl;
+		cout << "movement " << movement << endl;
+		cout << "wounds " << wounds << endl;
 	}
 };
 
-//main function
+//inherited class
+
+class Imperium : public Model {
+private:
+	string faction;
+
+public:
+	Imperium(int year, string name, int movement, int wounds, string faction)
+		:Model(year, name, movement, wounds),
+		faction(faction) {
+
+	}
+
+	void display() override {
+		cout << "year " << year << endl;
+		cout << "name " << name << endl;
+		cout << "movement " << movement << endl;
+		cout << "wounds " << wounds << endl;
+		cout << "Faction: " << faction << endl;
+	}
+};
 
 int main() {
-	spacemarine Titus("leader", "captain", 500);
-	spacemarine Angelos("leader", "chaptermaster", 1000);
-	SoB Celestine("Saint", "Celestine", 8);
-	SoB Maria("battle sister", "Maria", 1);
+	Model myModel(2025, "Generic Model", 6, 3);
 
-	cout << Titus.role << " " << Titus.rank << " " << Titus.age << "\n";
-	cout << Angelos.role << " " << Angelos.rank << " " << Angelos.age << "\n";
-	cout << Celestine.rank << " " << Celestine.name << " " << Celestine.wounds << "\n";
-}
+	Imperium myImperium(2025, "", 6, 1, "Adepta Soriritas");
 
+
+	cout << "MODEL" << endl;
+	myModel.display();
+
+	cout << endl << "IMPERIUM MODEL" << endl;
+	myImperium.display();
+
+};
