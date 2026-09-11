@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -15,11 +16,11 @@ public:
 		:year(year), name(name), movement(movement), wounds(wounds) {
 	}
 
-	virtual void display() {
-		cout << "year " << year << endl;
-		cout << "name " << name << endl;
-		cout << "movement " << movement << endl;
-		cout << "wounds " << wounds << endl;
+	virtual void display() const {
+		cout << "Year: " << year << endl;
+		cout << "Name: " << name << endl;
+		cout << "Movement: " << movement << endl;
+		cout << "Wounds: " << wounds << endl;
 	}
 };
 
@@ -32,24 +33,69 @@ public:
 		:imperium(year, name, movement, wounds), chapter(chapter) {
 	}
 
-	void display() override {
-		cout << "year " << year << endl;
-		cout << "name " << name << endl;
-		cout << "movement " << movement << endl;
-		cout << "wounds " << wounds << endl;
-		cout << "chapter " << chapter << endl;
+	void display() const override {
+		cout << "Year: " << year << endl;
+		cout << "Name: " << name << endl;
+		cout << "Movement: " << movement << endl;
+		cout << "Wounds: " << wounds << endl;
+		cout << "Chapter: " << chapter << endl;
 	}
 };
 
 int main() {
-	imperium testImperium(2025, "test", 6, 3);
+	vector<spacemarine> army;
 
-	spacemarine testMarine(2025, "Dreadnought", 8, 9, "Ultramarines");
+	int numberofMarines;
 
-	cout << "TESTMODEL" << endl;
-	testImperium.display();
+	cout << "How many space marines do you want to add? ";
+	cin >> numberofMarines;
 
-	cout << "TESTMARINE" << endl;
-	testMarine.display();
+	for (int i = 0; i < numberofMarines; i++) {
 
-};
+		int year;
+		string name;
+		int movement;
+		int wounds;
+		string chapter;
+
+		cout << "\n--- Space Marine " << i + 1 << "---\n";
+
+		cout << "Enter year: ";
+		cin >> year;
+
+		cout << "Enter name: ";
+		cin.ignore();
+		getline(cin, name);
+
+		cout << "Enter movement: ";
+		cin >> movement;
+
+		cout << "Enter wounds: ";
+		cin >> wounds;
+
+		cout << "Enter chapter: ";
+		cin.ignore();
+		getline(cin, chapter);
+
+		spacemarine newMarine(
+			year,
+			name,
+			movement,
+			wounds,
+			chapter
+		);
+
+		army.push_back(newMarine);
+	}
+
+	cout << "\n====================\n";
+	cout << "YOUR SPACE MARINE ARMY\n";
+	cout << "====================\n";
+
+	for (const spacemarine& marine : army) {
+		marine.display();
+		cout << "-----------\n";
+	}
+	return 0;
+
+}
