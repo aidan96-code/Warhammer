@@ -44,6 +44,25 @@ public:
 	}
 };
 
+class sistersofbattle : public imperium {
+private:
+	string order;
+
+public:
+	sistersofbattle(int year, string name, int movement, int wounds, string order)
+		:imperium(year, name, movement, wounds), order(order) {
+	}
+
+	void display() const override {
+		cout << "Year: " << year << endl;
+		cout << "Name: " << name << endl;
+		cout << "Movement: " << movement << endl;
+		cout << "Wounds: " << wounds << endl;
+		cout << "Order: " << order << endl;
+	}
+};
+
+
 int main() {
 	vector<unique_ptr<imperium>> army;
 
