@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <memory>
 
 using namespace std;
 
@@ -22,6 +23,7 @@ public:
 		cout << "Movement: " << movement << endl;
 		cout << "Wounds: " << wounds << endl;
 	}
+	virtual ~imperium() = default;
 };
 
 class spacemarine : public imperium {
@@ -43,7 +45,7 @@ public:
 };
 
 int main() {
-	vector<spacemarine> army;
+	vector<unique_ptr<spacemarine>> army;
 
 	int numberofMarines;
 
@@ -77,23 +79,23 @@ int main() {
 		cin.ignore();
 		getline(cin, chapter);
 
-		spacemarine newMarine(
-			year,
-			name,
-			movement,
-			wounds,
-			chapter
+		army.push_back(
+			make_unique<spacemarine>(
+				year,
+				name,
+				movement,
+				wounds,
+				chapter
+			)
 		);
-
-		army.push_back(newMarine);
 	}
 
 	cout << "\n====================\n";
 	cout << "YOUR SPACE MARINE ARMY\n";
 	cout << "====================\n";
 
-	for (const spacemarine& marine : army) {
-		marine.display();
+	for (const auto& marine : army) {
+		marine->display();
 		cout << "-----------\n";
 	}
 	return 0;
