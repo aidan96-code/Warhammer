@@ -45,7 +45,7 @@ public:
 };
 
 int main() {
-	vector<unique_ptr<spacemarine>> army;
+	vector<unique_ptr<imperium>> army;
 
 	int numberofMarines;
 
