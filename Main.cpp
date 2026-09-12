@@ -44,23 +44,52 @@ public:
 	}
 };
 
+class sistersofbattle : public imperium {
+private:
+	string order;
+
+public:
+	sistersofbattle(int year, string name, int movement, int wounds, string order)
+		:imperium(year, name, movement, wounds), order(order) {
+	}
+
+	void display() const override {
+		cout << "Year: " << year << endl;
+		cout << "Name: " << name << endl;
+		cout << "Movement: " << movement << endl;
+		cout << "Wounds: " << wounds << endl;
+		cout << "Order: " << order << endl;
+	}
+};
+
+
 int main() {
-	vector<unique_ptr<spacemarine>> army;
+	vector<unique_ptr<imperium>> army;
 
-	int numberofMarines;
+	int numberofUnits;
 
-	cout << "How many space marines do you want to add? ";
-	cin >> numberofMarines;
+	cout << "How many units do you want to add? ";
+	cin >> numberofUnits;
 
-	for (int i = 0; i < numberofMarines; i++) {
+	for (int i = 0; i < numberofUnits; i++) {
+
+		int choice;
+
+		cout << "\n====================\n";
+		cout << "UNIT " << i + 1 << endl;
+		cout << "====================\n";
+
+		cout << "What unit would you like to add?\n";
+		cout << "1. Space Marine\n";
+		cout << "2. Sisters of Battle\n";
+		cout << "Enter your choice (1 or 2): ";
+
+		cin >> choice;
 
 		int year;
 		string name;
 		int movement;
 		int wounds;
-		string chapter;
-
-		cout << "\n--- Space Marine " << i + 1 << "---\n";
 
 		cout << "Enter year: ";
 		cin >> year;
@@ -75,27 +104,49 @@ int main() {
 		cout << "Enter wounds: ";
 		cin >> wounds;
 
-		cout << "Enter chapter: ";
-		cin.ignore();
-		getline(cin, chapter);
-
-		army.push_back(
-			make_unique<spacemarine>(
-				year,
-				name,
-				movement,
-				wounds,
-				chapter
-			)
-		);
+		if (choice == 1) {
+			string chapter;
+			cout << "Enter chapter: ";
+			cin.ignore();
+			getline(cin, chapter);
+			army.push_back(
+				make_unique<spacemarine>(
+					year,
+					name,
+					movement,
+					wounds,
+					chapter
+				)
+			);
+		}
+		else if (choice == 2) {
+			string order;
+			cout << "Enter order: ";
+			cin.ignore();
+			getline(cin, order);
+			army.push_back(
+				make_unique<sistersofbattle>(
+					year,
+					name,
+					movement,
+					wounds,
+					order
+				)
+			);
+		}
+		else {
+			cout << "Invalid choice. Please enter 1 or 2." << endl;
+			i--; // Decrement i to repeat this iteration
+			continue; // Skip the rest of the loop and go to the next iteration
+		}
 	}
 
 	cout << "\n====================\n";
-	cout << "YOUR SPACE MARINE ARMY\n";
+	cout << "YOUR IMPERIUM ARMY\n";
 	cout << "====================\n";
 
-	for (const auto& marine : army) {
-		marine->display();
+	for (const auto& unit : army) {
+		unit->display();
 		cout << "-----------\n";
 	}
 	return 0;
